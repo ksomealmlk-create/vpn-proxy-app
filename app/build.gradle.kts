@@ -42,4 +42,6 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
     implementation("androidx.lifecycle:lifecycle-service:2.8.4")
+
+    implementation(files("libs/libv2ray.aar"))
 }
