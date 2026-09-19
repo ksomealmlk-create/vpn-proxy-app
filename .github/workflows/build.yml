@@ -13,6 +13,10 @@ jobs:
         run: chmod +x gradlew || true
       - name: Generate Gradle Wrapper
         run: gradle wrapper --gradle-version 8.7 || true
+      - name: Download libv2ray.aar
+        run: |
+          mkdir -p app/libs
+          curl -L -o app/libs/libv2ray.aar https://github.com/2dust/AndroidLibXrayLite/releases/download/v26.9.9/libv2ray.aar
       - name: Build APK
         run: ./gradlew assembleDebug
       - uses: actions/upload-artifact@v4
