@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <EditText
+        android:id="@+id/serverAddressInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="عنوان السيرفر" />
+
+    <EditText
+        android:id="@+id/serverPortInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="بورت السيرفر"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/userIdInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="UUID / User ID" />
+
+    <Button
+        android:id="@+id/startButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="تشغيل VPN + Proxy" />
+
+    <Button
+        android:id="@+id/stopButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="إيقاف" />
+
+    <Button
+        android:id="@+id/hotspotButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="فتح إعدادات نقطة الاتصال" />
+
+    <TextView
+        android:id="@+id/statusText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="متوقف"
+        android:textSize="14sp" />
+
+</LinearLayout>
