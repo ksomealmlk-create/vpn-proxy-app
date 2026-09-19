@@ -14,18 +14,14 @@ import com.example.vpnproxy.vpn.MyVpnService
 class MainActivity : AppCompatActivity() {
 
     private val VPN_REQUEST_CODE = 100
-    private lateinit var serverAddressInput: EditText
-    private lateinit var serverPortInput: EditText
-    private lateinit var userIdInput: EditText
+    private lateinit var vlessLinkInput: EditText
     private lateinit var statusText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        serverAddressInput = findViewById(R.id.serverAddressInput)
-        serverPortInput = findViewById(R.id.serverPortInput)
-        userIdInput = findViewById(R.id.userIdInput)
+        vlessLinkInput = findViewById(R.id.vlessLinkInput)
         statusText = findViewById(R.id.statusText)
 
         findViewById<Button>(R.id.startButton).setOnClickListener { prepareAndStartVpn() }
@@ -56,12 +52,21 @@ class MainActivity : AppCompatActivity() {
     private fun startVpnService() {
         val serviceIntent = Intent(this, MyVpnService::class.java).apply {
             action = MyVpnService.ACTION_START
-            putExtra("server_address", serverAddressInput.text.toString())
-            putExtra("server_port", serverPortInput.text.toString().toIntOrNull() ?: 443)
-            putExtra("user_id", userIdInput.text.toString())
+            putExtra("vless_link", vlessLinkInput.text.toString().trim())
         }
         startForegroundService(serviceIntent)
         statusText.text = "متصل\nSOCKS5: 127.0.0.1:${MyVpnService.SOCKS_LISTEN_PORT}" +
+                "\nHTTP: 127.0.0.1:${MyVpnService.HTTP_LISTEN_PORT}"
+    }
+
+    private fun stopVpn() {
+        val serviceIntent = Intent(this, MyVpnService::class.java).apply {
+            action = MyVpnService.ACTION_STOP
+        }
+        startService(serviceIntent)
+        statusText.text = "متوقف"
+    }
+}        statusText.text = "متصل\nSOCKS5: 127.0.0.1:${MyVpnService.SOCKS_LISTEN_PORT}" +
                 "\nHTTP: 127.0.0.1:${MyVpnService.HTTP_LISTEN_PORT}"
     }
 
