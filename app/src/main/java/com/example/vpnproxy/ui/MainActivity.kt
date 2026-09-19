@@ -55,19 +55,7 @@ class MainActivity : AppCompatActivity() {
             putExtra("vless_link", vlessLinkInput.text.toString().trim())
         }
         startForegroundService(serviceIntent)
-        statusText.text = "متصل\nSOCKS5: 127.0.0.1:${MyVpnService.SOCKS_LISTEN_PORT}" +
-                "\nHTTP: 127.0.0.1:${MyVpnService.HTTP_LISTEN_PORT}"
-    }
-
-    private fun stopVpn() {
-        val serviceIntent = Intent(this, MyVpnService::class.java).apply {
-            action = MyVpnService.ACTION_STOP
-        }
-        startService(serviceIntent)
-        statusText.text = "متوقف"
-    }
-}        statusText.text = "متصل\nSOCKS5: 127.0.0.1:${MyVpnService.SOCKS_LISTEN_PORT}" +
-                "\nHTTP: 127.0.0.1:${MyVpnService.HTTP_LISTEN_PORT}"
+        statusText.text = "متصل"
     }
 
     private fun stopVpn() {
