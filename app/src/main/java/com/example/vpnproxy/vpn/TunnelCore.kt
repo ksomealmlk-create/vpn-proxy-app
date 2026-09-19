@@ -1,4 +1,4 @@
-ppackage com.example.vpnproxy.vpn
+package com.example.vpnproxy.vpn
 
 import libv2ray.CoreCallbackHandler
 import libv2ray.CoreController
@@ -21,7 +21,7 @@ class TunnelCore {
         if (running) return
         try {
             controller = Libv2ray.newCoreController(callbackHandler)
-            controller?.startLoop(configJson, tunFd.toLong())
+            controller?.startLoop(configJson, tunFd)
             running = true
         } catch (e: Exception) {
             running = false
@@ -61,18 +61,6 @@ class TunnelCore {
               "settings": {
                 "vnext": [
                   {
-                    "address": "$serverAddress",
-                    "port": $serverPort,
-                    "users": [ { "id": "$userId", "alterId": $alterId } ]
-                  }
-                ]
-              }
-            }
-          ]
-        }
-        """.trimIndent()
-    }
-}
                     "address": "$serverAddress",
                     "port": $serverPort,
                     "users": [ { "id": "$userId", "alterId": $alterId } ]
