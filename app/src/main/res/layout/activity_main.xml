@@ -6,23 +6,12 @@
     android:padding="24dp">
 
     <EditText
-        android:id="@+id/serverAddressInput"
+        android:id="@+id/vlessLinkInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="عنوان السيرفر" />
-
-    <EditText
-        android:id="@+id/serverPortInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="بورت السيرفر"
-        android:inputType="number" />
-
-    <EditText
-        android:id="@+id/userIdInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="UUID / User ID" />
+        android:hint="الصق رابط vless:// هنا"
+        android:minLines="3"
+        android:inputType="textMultiLine" />
 
     <Button
         android:id="@+id/startButton"
