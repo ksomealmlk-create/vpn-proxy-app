@@ -3,6 +3,8 @@ package com.example.vpnproxy.vpn
 import libv2ray.CoreCallbackHandler
 import libv2ray.CoreController
 import libv2ray.Libv2ray
+import java.net.URI
+import java.net.URLDecoder
 
 class TunnelCore {
 
@@ -39,12 +41,35 @@ class TunnelCore {
 
     fun isRunning() = running
 
-    fun buildConfig(
-        serverAddress: String,
-        serverPort: Int,
-        userId: String,
-        alterId: Int = 0
-    ): String {
+    fun buildConfigFromVlessLink(link: String): String {
+        val uri = URI(link)
+        val uuid = uri.userInfo
+        val address = uri.host
+        val port = if (uri.port != -1) uri.port else 443
+
+        val params = mutableMapOf<String, String>()
+        uri.query?.split("&")?.forEach { pair ->
+            val idx = pair.indexOf("=")
+            if (idx > 0) {
+                val key = pair.substring(0, idx)
+                val value = URLDecoder.decode(pair.substring(idx + 1), "UTF-8")
+                params[key] = value
+            }
+        }
+
+        val network = params["type"] ?: "tcp"
+        val security = params["security"] ?: "none"
+        val path = params["path"] ?: "/"
+        val host = params["host"] ?: ""
+        val encryption = params["encryption"] ?: "none"
+
+        val streamSettings = StringBuilder()
+        streamSettings.append("""{ "network": "$network", "security": "$security"""")
+        if (network == "ws") {
+            streamSettings.append(""", "wsSettings": { "path": "$path", "headers": { "Host": "$host" } }""")
+        }
+        streamSettings.append(" }")
+
         return """
         {
           "inbounds": [
@@ -57,16 +82,17 @@ class TunnelCore {
           ],
           "outbounds": [
             {
-              "protocol": "vmess",
+              "protocol": "vless",
               "settings": {
                 "vnext": [
                   {
-                    "address": "$serverAddress",
-                    "port": $serverPort,
-                    "users": [ { "id": "$userId", "alterId": $alterId } ]
+                    "address": "$address",
+                    "port": $port,
+                    "users": [ { "id": "$uuid", "encryption": "$encryption" } ]
                   }
                 ]
-              }
+              },
+              "streamSettings": $streamSettings
             }
           ]
         }
